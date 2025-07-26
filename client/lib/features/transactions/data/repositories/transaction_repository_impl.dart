@@ -21,7 +21,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     TransactionType? type,
   }) async {
     try {
-      final String? typeString = type != null 
+      final String? typeString = type != null
           ? (type == TransactionType.income ? 'income' : 'expense')
           : null;
 
@@ -32,9 +32,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
         type: typeString,
       );
 
-      final transactions = transactionModels
-          .map((model) => model.toEntity())
-          .toList();
+      final transactions =
+          transactionModels.map((model) => model.toEntity()).toList();
 
       return Right(transactions);
     } on CacheException catch (e) {
@@ -57,10 +56,12 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, Transaction>> createTransaction(Transaction transaction) async {
+  Future<Either<Failure, Transaction>> createTransaction(
+      Transaction transaction) async {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
-      final createdModel = await localDataSource.createTransaction(transactionModel);
+      final createdModel =
+          await localDataSource.createTransaction(transactionModel);
       return Right(createdModel.toEntity());
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -70,10 +71,12 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<Failure, Transaction>> updateTransaction(Transaction transaction) async {
+  Future<Either<Failure, Transaction>> updateTransaction(
+      Transaction transaction) async {
     try {
       final transactionModel = TransactionModel.fromEntity(transaction);
-      final updatedModel = await localDataSource.updateTransaction(transactionModel);
+      final updatedModel =
+          await localDataSource.updateTransaction(transactionModel);
       return Right(updatedModel.toEntity());
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -101,7 +104,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     TransactionType? type,
   }) async {
     try {
-      final String? typeString = type != null 
+      final String? typeString = type != null
           ? (type == TransactionType.income ? 'income' : 'expense')
           : null;
 

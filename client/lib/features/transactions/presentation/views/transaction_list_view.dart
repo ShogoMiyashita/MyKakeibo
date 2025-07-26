@@ -9,7 +9,8 @@ class TransactionListView extends ConsumerStatefulWidget {
   const TransactionListView({super.key});
 
   @override
-  ConsumerState<TransactionListView> createState() => _TransactionListViewState();
+  ConsumerState<TransactionListView> createState() =>
+      _TransactionListViewState();
 }
 
 class _TransactionListViewState extends ConsumerState<TransactionListView> {
@@ -70,7 +71,8 @@ class _TransactionListViewState extends ConsumerState<TransactionListView> {
                   : ListView.builder(
                       itemCount: transactionState.transactions.length,
                       itemBuilder: (context, index) {
-                        final transaction = transactionState.transactions[index];
+                        final transaction =
+                            transactionState.transactions[index];
                         final category = categoryState.categories
                             .where((c) => c.id == transaction.categoryId)
                             .firstOrNull;
@@ -78,7 +80,8 @@ class _TransactionListViewState extends ConsumerState<TransactionListView> {
                         return _TransactionTile(
                           transaction: transaction,
                           categoryName: category?.name ?? '不明なカテゴリ',
-                          onTap: () => _showTransactionDetails(context, transaction),
+                          onTap: () =>
+                              _showTransactionDetails(context, transaction),
                         );
                       },
                     ),
@@ -158,14 +161,15 @@ class _AddTransactionDialog extends ConsumerStatefulWidget {
   const _AddTransactionDialog();
 
   @override
-  ConsumerState<_AddTransactionDialog> createState() => _AddTransactionDialogState();
+  ConsumerState<_AddTransactionDialog> createState() =>
+      _AddTransactionDialogState();
 }
 
 class _AddTransactionDialogState extends ConsumerState<_AddTransactionDialog> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
-  
+
   TransactionType _selectedType = TransactionType.expense;
   String? _selectedCategoryId;
   DateTime _selectedDate = DateTime.now();
@@ -223,7 +227,8 @@ class _AddTransactionDialogState extends ConsumerState<_AddTransactionDialog> {
                         ))
                     .toList(),
                 validator: (value) => value == null ? 'カテゴリを選択してください' : null,
-                onChanged: (value) => setState(() => _selectedCategoryId = value),
+                onChanged: (value) =>
+                    setState(() => _selectedCategoryId = value),
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -234,7 +239,8 @@ class _AddTransactionDialogState extends ConsumerState<_AddTransactionDialog> {
                   if (value == null || value.isEmpty) {
                     return '金額を入力してください';
                   }
-                  if (double.tryParse(value) == null || double.parse(value) <= 0) {
+                  if (double.tryParse(value) == null ||
+                      double.parse(value) <= 0) {
                     return '正しい金額を入力してください';
                   }
                   return null;
@@ -248,7 +254,8 @@ class _AddTransactionDialogState extends ConsumerState<_AddTransactionDialog> {
               ),
               const SizedBox(height: 16),
               ListTile(
-                title: Text('日付: ${DateFormat('yyyy/MM/dd').format(_selectedDate)}'),
+                title: Text(
+                    '日付: ${DateFormat('yyyy/MM/dd').format(_selectedDate)}'),
                 trailing: const Icon(Icons.calendar_today),
                 onTap: _selectDate,
               ),

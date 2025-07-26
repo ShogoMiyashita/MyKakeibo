@@ -35,7 +35,8 @@ void main() {
       updatedAt: DateTime.now(),
     );
 
-    test('should create category successfully when valid params are provided', () async {
+    test('should create category successfully when valid params are provided',
+        () async {
       // arrange
       when(() => mockRepository.createCategory(any()))
           .thenAnswer((_) async => Right(category));
@@ -72,7 +73,8 @@ void main() {
       verifyNever(() => mockRepository.createCategory(any()));
     });
 
-    test('should return ValidationFailure when name is only whitespace', () async {
+    test('should return ValidationFailure when name is only whitespace',
+        () async {
       // arrange
       const invalidParams = CreateCategoryParams(
         name: '   ',

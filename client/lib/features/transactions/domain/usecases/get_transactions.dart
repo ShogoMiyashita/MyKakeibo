@@ -8,7 +8,8 @@ class GetTransactions {
 
   GetTransactions(this.repository);
 
-  Future<Either<Failure, List<Transaction>>> call(GetTransactionsParams params) async {
+  Future<Either<Failure, List<Transaction>>> call(
+      GetTransactionsParams params) async {
     return await repository.getTransactions(
       startDate: params.startDate,
       endDate: params.endDate,

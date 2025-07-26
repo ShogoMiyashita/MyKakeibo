@@ -8,7 +8,8 @@ class GetCategories {
 
   GetCategories(this.repository);
 
-  Future<Either<Failure, List<Category>>> call(GetCategoriesParams params) async {
+  Future<Either<Failure, List<Category>>> call(
+      GetCategoriesParams params) async {
     return await repository.getCategories(
       type: params.type,
       isActive: params.isActive,

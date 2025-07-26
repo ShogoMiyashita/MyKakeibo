@@ -19,7 +19,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     bool? isActive,
   }) async {
     try {
-      final String? typeString = type != null 
+      final String? typeString = type != null
           ? (type == CategoryType.income ? 'income' : 'expense')
           : null;
 
@@ -28,9 +28,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
         isActive: isActive,
       );
 
-      final categories = categoryModels
-          .map((model) => model.toEntity())
-          .toList();
+      final categories =
+          categoryModels.map((model) => model.toEntity()).toList();
 
       return Right(categories);
     } on CacheException catch (e) {
@@ -91,12 +90,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<Category>>> getSubCategories(String parentId) async {
+  Future<Either<Failure, List<Category>>> getSubCategories(
+      String parentId) async {
     try {
       final categoryModels = await localDataSource.getSubCategories(parentId);
-      final categories = categoryModels
-          .map((model) => model.toEntity())
-          .toList();
+      final categories =
+          categoryModels.map((model) => model.toEntity()).toList();
 
       return Right(categories);
     } on CacheException catch (e) {

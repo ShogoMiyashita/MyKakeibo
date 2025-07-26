@@ -11,8 +11,11 @@ import 'package:mykakeibo/features/transactions/domain/usecases/update_transacti
 import 'package:mykakeibo/features/transactions/presentation/viewmodels/transaction_viewmodel.dart';
 
 class MockGetTransactions extends Mock implements GetTransactions {}
+
 class MockCreateTransaction extends Mock implements CreateTransaction {}
+
 class MockUpdateTransaction extends Mock implements UpdateTransaction {}
+
 class MockDeleteTransaction extends Mock implements DeleteTransaction {}
 
 void main() {
@@ -31,11 +34,11 @@ void main() {
     container = ProviderContainer(
       overrides: [
         transactionViewModelProvider.overrideWith((ref) => TransactionViewModel(
-          getTransactions: mockGetTransactions,
-          createTransaction: mockCreateTransaction,
-          updateTransaction: mockUpdateTransaction,
-          deleteTransaction: mockDeleteTransaction,
-        )),
+              getTransactions: mockGetTransactions,
+              createTransaction: mockCreateTransaction,
+              updateTransaction: mockUpdateTransaction,
+              deleteTransaction: mockDeleteTransaction,
+            )),
       ],
     );
   });
@@ -161,7 +164,7 @@ void main() {
         // まず取引をリストに追加
         when(() => mockGetTransactions(any()))
             .thenAnswer((_) async => Right([testTransaction]));
-        
+
         final notifier = container.read(transactionViewModelProvider.notifier);
         await notifier.loadTransactions();
 
