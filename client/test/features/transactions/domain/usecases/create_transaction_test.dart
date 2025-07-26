@@ -36,7 +36,9 @@ void main() {
       updatedAt: DateTime.now(),
     );
 
-    test('should create transaction successfully when valid params are provided', () async {
+    test(
+        'should create transaction successfully when valid params are provided',
+        () async {
       // arrange
       when(() => mockRepository.createTransaction(any()))
           .thenAnswer((_) async => Right(transaction));
@@ -49,7 +51,8 @@ void main() {
       expect(result, equals(Right(transaction)));
     });
 
-    test('should return ValidationFailure when amount is zero or negative', () async {
+    test('should return ValidationFailure when amount is zero or negative',
+        () async {
       // arrange
       final invalidParams = CreateTransactionParams(
         amount: 0.0,

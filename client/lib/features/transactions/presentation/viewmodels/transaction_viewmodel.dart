@@ -10,7 +10,7 @@ import '../../domain/usecases/update_transaction.dart';
 part 'transaction_viewmodel.freezed.dart';
 
 @freezed
-class TransactionState with _$TransactionState {
+abstract class TransactionState with _$TransactionState {
   const factory TransactionState({
     @Default([]) List<Transaction> transactions,
     @Default(false) bool isLoading,
@@ -19,7 +19,8 @@ class TransactionState with _$TransactionState {
   }) = _TransactionState;
 }
 
-final transactionViewModelProvider = StateNotifierProvider<TransactionViewModel, TransactionState>(
+final transactionViewModelProvider =
+    StateNotifierProvider<TransactionViewModel, TransactionState>(
   (ref) => TransactionViewModel(
     getTransactions: ref.watch(getTransactionsUseCaseProvider),
     createTransaction: ref.watch(createTransactionUseCaseProvider),
@@ -135,7 +136,7 @@ class TransactionViewModel extends StateNotifier<TransactionState> {
         final updatedTransactions = state.transactions
             .map((t) => t.id == updatedTransaction.id ? updatedTransaction : t)
             .toList();
-        
+
         state = state.copyWith(
           isLoading: false,
           transactions: updatedTransactions,
@@ -155,10 +156,9 @@ class TransactionViewModel extends StateNotifier<TransactionState> {
         errorMessage: failure.message,
       ),
       (_) {
-        final updatedTransactions = state.transactions
-            .where((t) => t.id != transactionId)
-            .toList();
-        
+        final updatedTransactions =
+            state.transactions.where((t) => t.id != transactionId).toList();
+
         state = state.copyWith(
           isLoading: false,
           transactions: updatedTransactions,

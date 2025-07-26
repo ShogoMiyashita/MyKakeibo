@@ -10,7 +10,7 @@ import '../../domain/usecases/update_category.dart';
 part 'category_viewmodel.freezed.dart';
 
 @freezed
-class CategoryState with _$CategoryState {
+abstract class CategoryState with _$CategoryState {
   const factory CategoryState({
     @Default([]) List<Category> categories,
     @Default(false) bool isLoading,
@@ -19,7 +19,8 @@ class CategoryState with _$CategoryState {
   }) = _CategoryState;
 }
 
-final categoryViewModelProvider = StateNotifierProvider<CategoryViewModel, CategoryState>(
+final categoryViewModelProvider =
+    StateNotifierProvider<CategoryViewModel, CategoryState>(
   (ref) => CategoryViewModel(
     getCategories: ref.watch(getCategoriesUseCaseProvider),
     createCategory: ref.watch(createCategoryUseCaseProvider),
@@ -129,7 +130,7 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
         final updatedCategories = state.categories
             .map((c) => c.id == updatedCategory.id ? updatedCategory : c)
             .toList();
-        
+
         state = state.copyWith(
           isLoading: false,
           categories: updatedCategories,
@@ -149,10 +150,9 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
         errorMessage: failure.message,
       ),
       (_) {
-        final updatedCategories = state.categories
-            .where((c) => c.id != categoryId)
-            .toList();
-        
+        final updatedCategories =
+            state.categories.where((c) => c.id != categoryId).toList();
+
         state = state.copyWith(
           isLoading: false,
           categories: updatedCategories,

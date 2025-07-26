@@ -31,18 +31,20 @@ class TransactionLocalDataSourceImpl implements TransactionLocalDataSource {
   }) async {
     // 実際のDBクエリをシミュレート
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     var filteredTransactions = _transactions.toList();
 
     if (startDate != null) {
       filteredTransactions = filteredTransactions
-          .where((t) => t.date.isAfter(startDate) || t.date.isAtSameMomentAs(startDate))
+          .where((t) =>
+              t.date.isAfter(startDate) || t.date.isAtSameMomentAs(startDate))
           .toList();
     }
 
     if (endDate != null) {
       filteredTransactions = filteredTransactions
-          .where((t) => t.date.isBefore(endDate) || t.date.isAtSameMomentAs(endDate))
+          .where((t) =>
+              t.date.isBefore(endDate) || t.date.isAtSameMomentAs(endDate))
           .toList();
     }
 
@@ -53,9 +55,8 @@ class TransactionLocalDataSourceImpl implements TransactionLocalDataSource {
     }
 
     if (type != null) {
-      filteredTransactions = filteredTransactions
-          .where((t) => t.type == type)
-          .toList();
+      filteredTransactions =
+          filteredTransactions.where((t) => t.type == type).toList();
     }
 
     return filteredTransactions;
@@ -64,7 +65,7 @@ class TransactionLocalDataSourceImpl implements TransactionLocalDataSource {
   @override
   Future<TransactionModel> getTransactionById(String id) async {
     await Future.delayed(const Duration(milliseconds: 50));
-    
+
     try {
       return _transactions.firstWhere((t) => t.id == id);
     } catch (e) {
@@ -73,17 +74,19 @@ class TransactionLocalDataSourceImpl implements TransactionLocalDataSource {
   }
 
   @override
-  Future<TransactionModel> createTransaction(TransactionModel transaction) async {
+  Future<TransactionModel> createTransaction(
+      TransactionModel transaction) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     _transactions.add(transaction);
     return transaction;
   }
 
   @override
-  Future<TransactionModel> updateTransaction(TransactionModel transaction) async {
+  Future<TransactionModel> updateTransaction(
+      TransactionModel transaction) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     final index = _transactions.indexWhere((t) => t.id == transaction.id);
     if (index == -1) {
       throw const CacheException(message: '更新対象の取引が見つかりません');
@@ -96,7 +99,7 @@ class TransactionLocalDataSourceImpl implements TransactionLocalDataSource {
   @override
   Future<void> deleteTransaction(String id) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     final index = _transactions.indexWhere((t) => t.id == id);
     if (index == -1) {
       throw const CacheException(message: '削除対象の取引が見つかりません');

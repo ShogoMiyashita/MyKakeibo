@@ -58,19 +58,17 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   }) async {
     // 実際のDBクエリをシミュレート
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     var filteredCategories = _categories.toList();
 
     if (type != null) {
-      filteredCategories = filteredCategories
-          .where((c) => c.type == type)
-          .toList();
+      filteredCategories =
+          filteredCategories.where((c) => c.type == type).toList();
     }
 
     if (isActive != null) {
-      filteredCategories = filteredCategories
-          .where((c) => c.isActive == isActive)
-          .toList();
+      filteredCategories =
+          filteredCategories.where((c) => c.isActive == isActive).toList();
     }
 
     return filteredCategories;
@@ -79,7 +77,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<CategoryModel> getCategoryById(String id) async {
     await Future.delayed(const Duration(milliseconds: 50));
-    
+
     try {
       return _categories.firstWhere((c) => c.id == id);
     } catch (e) {
@@ -90,7 +88,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<CategoryModel> createCategory(CategoryModel category) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     _categories.add(category);
     return category;
   }
@@ -98,7 +96,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<CategoryModel> updateCategory(CategoryModel category) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     final index = _categories.indexWhere((c) => c.id == category.id);
     if (index == -1) {
       throw const CacheException(message: '更新対象のカテゴリが見つかりません');
@@ -111,7 +109,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<void> deleteCategory(String id) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
+
     final index = _categories.indexWhere((c) => c.id == id);
     if (index == -1) {
       throw const CacheException(message: '削除対象のカテゴリが見つかりません');
@@ -123,9 +121,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<List<CategoryModel>> getSubCategories(String parentId) async {
     await Future.delayed(const Duration(milliseconds: 100));
-    
-    return _categories
-        .where((c) => c.parentId == parentId)
-        .toList();
+
+    return _categories.where((c) => c.parentId == parentId).toList();
   }
 }

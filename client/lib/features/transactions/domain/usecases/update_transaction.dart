@@ -8,7 +8,8 @@ class UpdateTransaction {
 
   UpdateTransaction(this.repository);
 
-  Future<Either<Failure, Transaction>> call(UpdateTransactionParams params) async {
+  Future<Either<Failure, Transaction>> call(
+      UpdateTransactionParams params) async {
     if (params.amount <= 0) {
       return const Left(ValidationFailure(message: '金額は0より大きい値を入力してください'));
     }
